@@ -55,5 +55,4 @@ public class Project {
     public void setLocation(String string){
         location = string;
     }
-
 }

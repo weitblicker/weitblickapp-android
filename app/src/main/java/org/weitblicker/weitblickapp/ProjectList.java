@@ -13,25 +13,29 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ProjectList extends ListFragment {
+    ArrayList<Project> projects = new ArrayList<Project>();
 
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);
 
-        Project sample_project_1 = new Project(111);
-        Project sample_project_2 = new Project(222);
-        Project sample_project_3 = new Project(333);
+        loadProjects();
 
-        ArrayList<Project> projectList = new ArrayList<Project>();//Project.getProjectFromFile("recipes.json", this);
-        projectList.add(sample_project_1);
-        projectList.add(sample_project_2);
-        projectList.add(sample_project_3);
-
-        ProjectAdapter adapter = new ProjectAdapter(getActivity(), projectList);
+        ProjectAdapter adapter = new ProjectAdapter(getActivity(), projects);
         setListAdapter(adapter);
     }
 
     public void onListItemClick(ListView l, View v, int position, long id){
 
         Log.i("listclick","Hallo " + position);
+    }
+
+    private void loadProjects(){
+        Project sample_project_1 = new Project(111);
+        Project sample_project_2 = new Project(222);
+        Project sample_project_3 = new Project(333);
+
+        projects.add(sample_project_1);
+        projects.add(sample_project_2);
+        projects.add(sample_project_3);
     }
 }
