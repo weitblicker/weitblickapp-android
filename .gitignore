@@ -4,3 +4,6 @@ build
 *.iml
 local.properties
 app/src/main/gen
+.DS_Store
+captures
+.externalNativeBuild
