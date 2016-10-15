@@ -55,8 +55,8 @@ public class ProjectAdapter extends BaseAdapter {
 
         Project project = (Project) getItem(position);
 
-        captionTextView.setText(project.name);
-        abstractTextView.setText(project.abst);
+        captionTextView.setText(project.getName());
+        abstractTextView.setText(project.getAbstract());
         //Picasso.with(mContext).load(project.thumbnailUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 
         return rowView;
