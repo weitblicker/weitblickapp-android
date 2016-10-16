@@ -2,11 +2,10 @@ package org.weitblicker.weitblickapp;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +42,7 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -76,6 +77,8 @@ public class MenuActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    String currentTitle = null;
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -87,12 +90,12 @@ public class MenuActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_projects) {
-            title  = "Projekte";
+            title = "Projekte";
             fragment = new ProjectList();
 
         } else if (id == R.id.nav_bicycle) {
-            title  = "Radeln";
-
+            title = "Radeln";
+            fragment = new MapsFragment();
         } else if (id == R.id.nav_campaign) {
             title  = "Aktionen";
 
@@ -107,7 +110,10 @@ public class MenuActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_menu, fragment);
-            ft.commit();
+            if(!title.equals(currentTitle)){
+                currentTitle = title;
+                ft.commit();
+            }
         }
 
         // set the toolbar title
@@ -119,4 +125,6 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
