@@ -60,6 +60,8 @@ public class ProjectListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project_list, container, false);
 
+        loadProjects();
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -72,6 +74,15 @@ public class ProjectListFragment extends ListFragment {
             recyclerView.setAdapter(new ProjectListAdapter(projects, mListener));
         }
         return view;
+    }
+
+    public void onActivityCreated(Bundle saveInstanceState){
+        super.onActivityCreated(saveInstanceState);
+
+        loadProjects();
+
+        ProjectAdapter adapter = new ProjectAdapter(getActivity(), projects);
+        setListAdapter(adapter);
     }
 
 

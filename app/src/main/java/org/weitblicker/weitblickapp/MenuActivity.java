@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_projects) {
             title  = "Projekte";
-            fragment = new ProjectListFragment();
+            fragment = ProjectListFragment.newInstance(1);
 
         } else if (id == R.id.nav_bicycle) {
             title  = "Radeln";
@@ -118,5 +118,10 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onProjectSelected(Project project) {
+
     }
 }
