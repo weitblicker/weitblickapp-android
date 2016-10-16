@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class ProjectList extends ListFragment {
-    ArrayList<Project> projects = new ArrayList<Project>();
+    private ArrayList<Project> projects = new ArrayList<Project>();
 
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);

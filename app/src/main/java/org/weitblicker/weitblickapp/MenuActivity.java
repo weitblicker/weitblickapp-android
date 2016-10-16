@@ -88,7 +88,7 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_projects) {
             title  = "Projekte";
-            fragment = new ProjectList();
+            fragment = new ProjectListFragment();
 
         } else if (id == R.id.nav_bicycle) {
             title  = "Radeln";
