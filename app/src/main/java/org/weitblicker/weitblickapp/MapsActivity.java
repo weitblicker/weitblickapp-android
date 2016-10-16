@@ -24,6 +24,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Timestamp;
+import java.util.concurrent.ArrayBlockingQueue;
+
 public class MapsActivity extends FragmentActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -48,6 +51,11 @@ public class MapsActivity extends FragmentActivity implements
     private static final int REQUEST_LOCATION = 0;
 
     private static final String PERM_FINE_LOC = Manifest.permission.ACCESS_FINE_LOCATION;
+
+    private static ArrayBlockingQueue<StampLocation> stampLocations = new ArrayBlockingQueue<>(50);
+
+    public static float totalMeters;
+    public static LatLng lastLatLng = null;
 
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -78,6 +86,8 @@ public class MapsActivity extends FragmentActivity implements
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+
+        totalMeters = 0;
     }
 
     @Override
@@ -142,6 +152,35 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    private void updateTotalMeters() {
+        // go over all saved stamplocations and check if it makes sense to increase totalMeters
+        // - min/max velocity
+        // - smooth out spikes
+    }
+
+    private void updatePosition(LatLng latLng) {
+        if(lastLatLng != null) {
+            float[] dist = new float[1];
+            Location.distanceBetween(lastLatLng.latitude,
+                    lastLatLng.longitude,
+                    latLng.latitude,
+                    latLng.longitude,
+                    dist);
+
+            StampLocation sl = new StampLocation(latLng, new Timestamp(System.currentTimeMillis()));
+            if(stampLocations.remainingCapacity() > 0) {
+                stampLocations.offer(sl);
+            } else {
+                stampLocations.poll();
+                stampLocations.offer(sl);
+            }
+
+            updateTotalMeters();
+            totalMeters += dist[0];
+        }
+        lastLatLng = latLng;
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
@@ -155,6 +194,8 @@ public class MapsActivity extends FragmentActivity implements
         double currentLongitude = location.getLongitude();
 
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
+
+        updatePosition(latLng);
 
         //mMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Current Location"));
         MarkerOptions options = new MarkerOptions()
