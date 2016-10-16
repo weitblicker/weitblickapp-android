@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/street"
+        android:text="street" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/town"
+        android:text="town" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postal_code"
+        android:text="Postal_code" />
+
+    <TextView
+        android:text="Country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/country" />
+
+    <TextView
+        android:text="Longitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/longitude" />
+
+    <TextView
+        android:text="Latitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/latitude" />
+
+    <TextView
+        android:text="Adition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/adition" />
+
+    <TextView
+        android:text="Comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/comments" />
+
+
+
+</LinearLayout>

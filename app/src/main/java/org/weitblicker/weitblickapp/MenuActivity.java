@@ -2,11 +2,10 @@ package org.weitblicker.weitblickapp;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,9 +13,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+   //Project contents layout
+    TextView p_name ;
+    TextView p_description ;
+    TextView p_title ;
+    TextView p_location ;
+
+
+    // Location Layout
+    TextView l_town ;
+    TextView l_city ;
+    TextView l_country ;
+    TextView l_postal_code ;
+    TextView l_longitude ;
+    TextView l_latitude ;
+    TextView l_adition ;
+    TextView l_comments ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +63,32 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        // to call the project's contents from Project class
+        p_name = (TextView) findViewById(R.id.name);
+        p_description = (TextView) findViewById(R.id.diescription);
+        p_title = (TextView) findViewById(R.id.title);
+        p_location = (TextView) findViewById(R.id.location);
+
+
+        Project p1=new Project(0,"","","","");
+        p_name.setText("Nmae:"+ " "+p1.getName());
+        p_description.setText("Description:"+ " "+p1.getDescription());
+        p_title.setText("Abstract:"+ " "+p1.getAbstract());
+
+
+        //to call the Location's data from Location Project
+
+         l_town= (TextView) findViewById(R.id.town);
+         l_city = (TextView) findViewById(R.id.city); ;
+         l_country= (TextView) findViewById(R.id.country) ;
+        l_postal_code=(TextView) findViewById(R.id.postal_code) ;
+         l_longitude=(TextView) findViewById(R.id.longitude) ;
+         l_latitude=(TextView) findViewById(R.id.latitude) ;
+         l_adition =(TextView) findViewById(R.id.adition);
+         l_comments=(TextView) findViewById(R.id.comments) ;
+
     }
 
     @Override
@@ -119,4 +166,9 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
 }

@@ -7,9 +7,10 @@ public class Project {
     private String abst;
     private String location;
 
+
     // convert from json, numbers with system language = text
 
-    public Project(int project_id) {
+    public Project(int project_id, String s, String s1, String s2, String s3) {
         // sample
         id = project_id;
         name = "name of project";
@@ -55,4 +56,9 @@ public class Project {
     public void setLocation(String string){
         location = string;
     }
+
+
+
+
+
 }
