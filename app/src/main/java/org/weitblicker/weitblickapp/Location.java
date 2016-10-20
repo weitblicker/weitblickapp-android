@@ -8,9 +8,9 @@ public class Location {
 
     private int id;
     private String town;
-    private int postal_code;
+    private int postalCode;
     private String street;
-    private int street_no;
+    private int streetNo;
     private String longitude;
     private String latitude;
     private String country;
@@ -24,9 +24,9 @@ public class Location {
         // sample
         id = location_id;
         town = "name of town";
-        postal_code =postal_id ;
+        postalCode =postal_id ;
         street = "name of street";
-        street_no = street_id; // converted from location id
+        streetNo = street_id; // converted from location id
         longitude= "longitude";
         latitude= "latitude" ;
         country="name of country";
@@ -43,16 +43,16 @@ public class Location {
         return town;
     }
 
-    public int getPostal_code() {
-        return postal_code;
+    public int getPostalCode() {
+        return postalCode;
     }
 
     public String getStreet() {
         return street;
     }
 
-    public int getStreet_no() {
-        return street_no;
+    public int getstreetNo() {
+        return streetNo;
     }
 
 
@@ -83,16 +83,16 @@ public class Location {
         town = string; // call name from database
     }
 
-    public void setPostal_code(Integer number){
-        postal_code = number;
+    public void setPostalCode(Integer number){
+        postalCode = number;
     }
 
     public void setStreet(String string){
         street = string;
     }
 
-    public void setStreet_no(Integer number){
-        street_no = number;
+    public void setStreetNo(Integer number){
+        streetNo = number;
     }
 
 
