@@ -22,16 +22,16 @@ public class Location {
 
     public Location(int location_id, String s, int postal_id, String s2, int street_id,String s3,String s4,String s5,String s6, String s7) {
         // sample
-        id = location_id;
-        town = "name of town";
-        postalCode =postal_id ;
-        street = "name of street";
-        streetNo = street_id; // converted from location id
-        longitude= "longitude";
-        latitude= "latitude" ;
-        country="name of country";
-        adition="aditions";
-        comments="other comments";
+        this.id = location_id;
+        this.town = "name of town";
+        this.postalCode =postal_id ;
+        this.street = "name of street";
+        this.streetNo = street_id; // converted from location id
+        this.longitude= "longitude";
+        this.latitude= "latitude" ;
+        this.country="name of country";
+        this.adition="aditions";
+        this.comments="other comments";
     }
 
     // get properties
