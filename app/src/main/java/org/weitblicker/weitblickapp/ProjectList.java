@@ -33,9 +33,16 @@ public class ProjectList extends ListFragment {
         Project sample_project_1 = new Project(111);
         Project sample_project_2 = new Project(222);
         Project sample_project_3 = new Project(333);
+        Project sample_project_4 = new Project(333);
+        Project sample_project_5 = new Project(333);
+        Project sample_project_6 = new Project(333);
+
 
         projects.add(sample_project_1);
         projects.add(sample_project_2);
         projects.add(sample_project_3);
+        projects.add(sample_project_4);
+        projects.add(sample_project_5);
+
     }
 }

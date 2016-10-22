@@ -12,9 +12,9 @@ public class Project {
     public Project(int project_id) {
         // sample
         id = project_id;
-        name = "name of project";
+        name = "Dies ist ein Beispiel Projekt";
         description = "project description";
-        abst = "project abstract";
+        abst = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.";
         location = "location of project"; // converted from location id
     }
 

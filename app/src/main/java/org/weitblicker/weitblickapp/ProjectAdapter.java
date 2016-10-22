@@ -43,21 +43,22 @@ public class ProjectAdapter extends BaseAdapter {
 
         // caption
         TextView captionTextView =
-                (TextView) rowView.findViewById(org.weitblicker.weitblickapp.R.id.project_list_title); // plus possibly location -> 'Title, Location' as caption
+                (TextView) rowView.findViewById(R.id.project_list_title); // plus possibly location -> 'Title, Location' as caption
 
         // abstract
         TextView abstractTextView =
-                (TextView) rowView.findViewById(org.weitblicker.weitblickapp.R.id.project_list_abstract);
+                (TextView) rowView.findViewById(R.id.project_list_abstract);
 
-        // thumbnail
-        //ImageView thumbnailImageView =
-        //        (ImageView) rowView.findViewById(org.weitblicker.weitblickapp.R.id.project_list_thumbnail);
+        // image
+        ImageView imageView =
+                (ImageView) rowView.findViewById(R.id.project_list_image);
 
         Project project = (Project) getItem(position);
 
         captionTextView.setText(project.getName());
         abstractTextView.setText(project.getAbstract());
         //Picasso.with(mContext).load(project.thumbnailUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
+        imageView.setImageResource(R.drawable.logo);
 
         return rowView;
     }
