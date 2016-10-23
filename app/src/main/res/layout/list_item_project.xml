@@ -5,21 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/wb_darkgrey"
-    android:padding="10dp">
+    android:paddingBottom="20dp">
 
     <ImageView
         android:id="@+id/project_list_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         tools:src="@drawable/logo"
         android:contentDescription="Bild"/>
+    
+    <ImageView
+        android:id="@+id/arrow_up_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/arrow_up"
+        android:layout_alignBottom="@id/project_list_image"
+        android:layout_centerHorizontal="true"/>
 
     <org.weitblicker.weitblickapp.BreeSerifTextView
         android:id="@+id/project_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/project_list_image"
         android:textColor="@color/wb_orange"
+        android:textSize="8pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         tools:text="title"/>
 
     <org.weitblicker.weitblickapp.OpenSansTextView
@@ -28,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/project_list_title"
         android:textColor="@color/wb_lightgrey"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         tools:text="abstract"/>
 
 </RelativeLayout>

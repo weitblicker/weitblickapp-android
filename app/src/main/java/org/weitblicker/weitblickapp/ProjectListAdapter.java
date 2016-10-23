@@ -1,6 +1,7 @@
 package org.weitblicker.weitblickapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class ProjectAdapter extends BaseAdapter {
+public class ProjectListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Project> mDataSource;
 
-    public ProjectAdapter(Context context, ArrayList<Project> items){
+    public ProjectListAdapter(Context context, ArrayList<Project> items){
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,8 +61,17 @@ public class ProjectAdapter extends BaseAdapter {
 
         captionTextView.setText(project.getName());
         abstractTextView.setText(project.getAbstract());
-        //Picasso.with(mContext).load(project.thumbnailUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
-        imageView.setImageResource(R.drawable.logo);
+
+        try {
+            Picasso.with(mContext)
+                    .load(project.getImageUrl().toString())
+                    .resize(800, 300)
+                    .centerCrop()
+                    .into(imageView);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            Log.e("error", "Can not load image via picasso!", e);
+        }
 
         return rowView;
     }

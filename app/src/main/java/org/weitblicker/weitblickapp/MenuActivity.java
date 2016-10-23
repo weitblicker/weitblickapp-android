@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public class MenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_projects) {
             title = "Projekte";
-            fragment = new ProjectList();
+            fragment = new ProjectListFragment();
 
         } else if (id == R.id.nav_bicycle) {
             title = "Radeln";
@@ -107,6 +107,11 @@ public class MenuActivity extends AppCompatActivity
 
         }
 
+        loadFragment(title, fragment);
+        return true;
+    }
+
+    public void loadFragment(String title, Fragment fragment){
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_menu, fragment);
@@ -114,16 +119,22 @@ public class MenuActivity extends AppCompatActivity
                 currentTitle = title;
                 ft.commit();
             }
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         }
 
         // set the toolbar title
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
         }
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+
+    @Override
+    public void onProjectSelect(Project project) {
+        // TODO load project fragment
+        loadFragment(project.getName(), new MapsFragment());
     }
 
 

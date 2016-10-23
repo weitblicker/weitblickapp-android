@@ -30,7 +30,7 @@
         </activity>
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCWPjFx14--lD8Ws597M_TXWWKCUlK3z-A"/>
-        <activity android:name=".ProjectList"/>
+        <activity android:name=".ProjectListFragment"/>
 
     </application>
 

@@ -47,7 +47,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
-    private static ArrayBlockingQueue<StampLocation> stampLocations = new ArrayBlockingQueue<>(50);
+    private static ArrayBlockingQueue<StampedLocation> stampedLocations = new ArrayBlockingQueue<>(50);
     public static LatLng lastLatLng = null;
     /*
      * Dieser request code wird beim Erfragen der Erlaubnis fuer GPS-Funktionen requestPermission()
@@ -274,12 +274,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback,
                     latLng.longitude,
                     dist);
 
-            StampLocation sl = new StampLocation(latLng, new Timestamp(System.currentTimeMillis()));
-            if(stampLocations.remainingCapacity() > 0) {
-                stampLocations.offer(sl);
+            StampedLocation sl = new StampedLocation(latLng, new Timestamp(System.currentTimeMillis()));
+            if(stampedLocations.remainingCapacity() > 0) {
+                stampedLocations.offer(sl);
             } else {
-                stampLocations.poll();
-                stampLocations.offer(sl);
+                stampedLocations.poll();
+                stampedLocations.offer(sl);
             }
             updateTotalMeters();
             totalMeters += dist[0];
