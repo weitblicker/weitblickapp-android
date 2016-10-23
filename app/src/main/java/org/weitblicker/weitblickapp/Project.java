@@ -10,17 +10,22 @@ public class Project {
     private String description;
     private String abst;
     private String location;
+    private String imageUrl;
 
-    // convert from json, numbers with system language = text
+    public Project(){
+        name = "Dies ist ein Beispiel Titel";
+        abst = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.";
+        description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+        imageUrl = "https://weitblicker.org/sites/default/files/styles/width100_custom_user_normal_1x/public/tappictures/12122961_1092695100749688_9146679379404367906_n.jpg";
+    }
 
-    public Project(int project_id) {
-        // sample
-        id = project_id;
-        name = "Dies ist ein Beispiel Projekt";
-        description = "project description";
-        abst = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.";
-        location = "location of project"; // converted from location id
-        URL imageUri = null;
+    public Project(int id, String name, String description, String abst, String location, String imageUrl){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.abst = abst;
+        this.location = location;
+        this.imageUrl = imageUrl;
     }
 
     // get properties
@@ -44,24 +49,7 @@ public class Project {
         return location;
     }
 
-    // set properties
-    public void setName(String string) {
-        name = string; // call name from database
-    }
-
-    public void setDescription(String string){
-        description = string;
-    }
-
-    public void setAbstract(String string){
-        abst = string;
-    }
-
-    public void setLocation(String string){
-        location = string;
-    }
-
-    public URL getImageUrl() throws MalformedURLException {
-        return new URL("https://weitblicker.org/sites/default/files/styles/width100_custom_user_normal_1x/public/tappictures/12122961_1092695100749688_9146679379404367906_n.jpg");
+    public String getImageUrl(){
+        return imageUrl;
     }
 }

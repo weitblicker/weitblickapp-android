@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,14 +112,24 @@ public class MenuActivity extends AppCompatActivity
         return true;
     }
 
+    int cnt = 0;
+
     public void loadFragment(String title, Fragment fragment){
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.content_menu, fragment);
+
+            Log.i("debug", "loadFragment: " + title + " cnt: " + cnt + " fragment:" + fragment.toString());
             ft.replace(R.id.content_menu, fragment);
+            ft.addToBackStack(cnt++ + "cnt");
+            ft.commit();
+
             if(!title.equals(currentTitle)){
                 currentTitle = title;
-                ft.commit();
+               // ft.commit();
+
             }
+
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -134,7 +145,11 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public void onProjectSelect(Project project) {
         // TODO load project fragment
-        loadFragment(project.getName(), new MapsFragment());
+
+        Fragment fragment = ProjectFragment.newInstance(project);
+
+        loadFragment(project.getName(), fragment);
+
     }
 
 

@@ -47,31 +47,26 @@ public class ProjectListAdapter extends BaseAdapter {
 
         // caption
         TextView captionTextView =
-                (TextView) rowView.findViewById(R.id.project_list_title); // plus possibly location -> 'Title, Location' as caption
+                (TextView) rowView.findViewById(R.id.list_item_project_title); // plus possibly location -> 'Title, Location' as caption
 
         // abstract
         TextView abstractTextView =
-                (TextView) rowView.findViewById(R.id.project_list_abstract);
+                (TextView) rowView.findViewById(R.id.list_item_project_abstract);
 
         // image
         ImageView imageView =
-                (ImageView) rowView.findViewById(R.id.project_list_image);
+                (ImageView) rowView.findViewById(R.id.list_item_project_image);
 
         Project project = (Project) getItem(position);
 
         captionTextView.setText(project.getName());
         abstractTextView.setText(project.getAbstract());
 
-        try {
-            Picasso.with(mContext)
-                    .load(project.getImageUrl().toString())
-                    .resize(800, 300)
-                    .centerCrop()
-                    .into(imageView);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            Log.e("error", "Can not load image via picasso!", e);
-        }
+        Picasso.with(mContext)
+            .load(project.getImageUrl())
+            .resize(800, 300)
+            .centerCrop()
+            .into(imageView);
 
         return rowView;
     }
