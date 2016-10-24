@@ -10,15 +10,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-public class ProjectFragment extends Fragment {
+public class ProjectFragment extends Fragment implements OnMapReadyCallback {
 
     private Project project = null;
     private Context context = null;
     static Gson gson = new Gson();
+    GoogleMap map = null;
 
     final static String PROJECT_BUNDLE_KEY = "JSON_PROJECT";
 
@@ -71,6 +81,14 @@ public class ProjectFragment extends Fragment {
             .centerCrop()
             .into(imageView);
 
+        MapView mapView = (MapView) view.findViewById(R.id.fragment_project_map);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+
+        MapsInitializer.initialize(getActivity());
+
+        mapView.getMapAsync(this);
+
         return view;
     }
 
@@ -86,4 +104,21 @@ public class ProjectFragment extends Fragment {
         context = null;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.map = googleMap;
+        map.getUiSettings().setMyLocationButtonEnabled(false);
+        //map.setMyLocationEnabled(false);
+
+        LatLng latLng = new LatLng(52.2679996,8.0508541);
+
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
+        map.animateCamera(cameraUpdate);
+
+        map.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title(project.getName()));
+
+    }
 }

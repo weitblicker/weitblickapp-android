@@ -1,3 +1,8 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,6 +46,16 @@
         android:textColor="@color/wb_lightgrey"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         tools:text="abstract"/>
 
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/fragment_project_map"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/fragment_project_abstract"/>
+
+
 </RelativeLayout>
+</ScrollView>
