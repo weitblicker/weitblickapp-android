@@ -70,7 +70,10 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         TextView titleView = (TextView) view.findViewById(R.id.fragment_project_title);
         titleView.setText(project.getName());
 
-        TextView descriptionView = (TextView) view.findViewById(R.id.fragment_project_abstract);
+        TextView abstView = (TextView) view.findViewById(R.id.fragment_project_abstract);
+        abstView.setText(project.getAbstract());
+
+        TextView descriptionView = (TextView) view.findViewById(R.id.fragment_project_description);
         descriptionView.setText(project.getDescription());
 
         ImageView imageView = (ImageView) view.findViewById(R.id.fragment_project_image);
@@ -110,7 +113,7 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setMyLocationButtonEnabled(false);
         //map.setMyLocationEnabled(false);
 
-        LatLng latLng = new LatLng(52.2679996,8.0508541);
+        LatLng latLng = project.getLatLng();
 
         // Updates the location and zoom of the MapView
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);

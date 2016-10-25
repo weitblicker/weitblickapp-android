@@ -1,5 +1,7 @@
 package org.weitblicker.weitblickapp;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -11,15 +13,19 @@ public class Project {
     private String abst;
     private String location;
     private String imageUrl;
+    private float lat, lng;
 
     public Project(){
+        // test data
+        lat = 52.2679996f;
+        lng = 8.0508541f;
         name = "Dies ist ein Beispiel Titel";
         abst = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.";
         description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
         imageUrl = "https://weitblicker.org/sites/default/files/styles/width100_custom_user_normal_1x/public/tappictures/12122961_1092695100749688_9146679379404367906_n.jpg";
     }
 
-    public Project(int id, String name, String description, String abst, String location, String imageUrl){
+    public Project(int id, String name, String description, String abst, String location, float lat, float lng, String imageUrl){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -47,6 +53,10 @@ public class Project {
 
     public String getLocation() {
         return location;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(lat, lng);
     }
 
     public String getImageUrl(){

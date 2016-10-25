@@ -7,54 +7,71 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/wb_darkgrey"
+    android:layout_height="wrap_content"
     android:paddingBottom="20dp">
 
-    <ImageView
-        android:id="@+id/fragment_project_image"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        tools:src="@drawable/logo"
-        android:contentDescription="Bild"/>
-
-    <ImageView
-        android:id="@+id/arrow_up_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/arrow_up"
-        android:layout_alignBottom="@id/fragment_project_image"
-        android:layout_centerHorizontal="true"/>
-
-    <org.weitblicker.weitblickapp.BreeSerifTextView
-        android:id="@+id/fragment_project_title"
+    <RelativeLayout
+        android:id="@+id/fragment_header_wrapper"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/fragment_project_image"
-        android:textColor="@color/wb_orange"
-        android:textSize="8pt"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        tools:text="title"/>
+        android:background="@color/wb_darkgrey"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:id="@+id/fragment_project_image"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            tools:src="@drawable/logo"
+            android:contentDescription="Bild"/>
+
+        <ImageView
+            android:id="@+id/arrow_up_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/arrow_up"
+            android:layout_alignBottom="@id/fragment_project_image"
+            android:layout_centerHorizontal="true"/>
+
+        <org.weitblicker.weitblickapp.BreeSerifTextView
+            android:id="@+id/fragment_project_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/fragment_project_image"
+            android:textColor="@color/wb_orange"
+            android:textSize="8pt"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="title"/>
+
+        <org.weitblicker.weitblickapp.OpenSansTextView
+            android:id="@+id/fragment_project_abstract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_project_title"
+            android:textColor="@color/wb_lightgrey"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="abstract"/>
+
+    </RelativeLayout>
 
     <org.weitblicker.weitblickapp.OpenSansTextView
-        android:id="@+id/fragment_project_abstract"
+        android:id="@+id/fragment_project_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_project_title"
-        android:textColor="@color/wb_lightgrey"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
+        android:layout_below="@+id/fragment_header_wrapper"
+        android:textColor="@color/wb_darkgrey"
+        android:padding="10dp"
         tools:text="abstract"/>
-
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/fragment_project_map"
         android:layout_width="fill_parent"
         android:layout_height="150dp"
-        android:layout_below="@id/fragment_project_abstract"/>
+        android:layout_below="@id/fragment_project_description"/>
 
 
 </RelativeLayout>
