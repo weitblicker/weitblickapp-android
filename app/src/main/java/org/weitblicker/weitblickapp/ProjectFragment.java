@@ -2,7 +2,11 @@ package org.weitblicker.weitblickapp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +28,16 @@ import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static android.R.attr.handle;
+
 public class ProjectFragment extends Fragment implements OnMapReadyCallback {
 
     private Project project = null;
     private Context context = null;
+    private ViewPager imageViewPager = null;
     static Gson gson = new Gson();
     GoogleMap map = null;
 
@@ -77,13 +87,28 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         TextView descriptionView = (TextView) view.findViewById(R.id.fragment_project_description);
         descriptionView.setText(project.getDescription());
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.fragment_project_image);
+        // Instantiate a ViewPager and a PagerAdapter.
+        imageViewPager = (ViewPager) view.findViewById(R.id.project_image_slide_pager);
+        final ImageSlidePagerAdapter imageViewPagerAdapter = new ImageSlidePagerAdapter(context, getChildFragmentManager(), project.getImages());
+        imageViewPager.setAdapter(imageViewPagerAdapter);
 
-        Picasso.with(context)
-            .load(project.getImageUrl())
-            .resize(800, 300)
-            .centerCrop()
-            .into(imageView);
+
+        // TODO integrate user interaction in auto slide
+        final Handler handler = new Handler();
+        Runnable task = new Runnable(){
+            int i = 0;
+            public void run(){
+                if(i >= imageViewPagerAdapter.getCount()) {
+                    i = 0;
+                }
+
+                imageViewPager.setCurrentItem(i, true);
+                i++;
+                handler.postDelayed(this, 4000);
+            }
+        };
+
+        task.run();
 
         MapView mapView = (MapView) view.findViewById(R.id.fragment_project_map);
         mapView.onCreate(savedInstanceState);

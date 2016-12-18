@@ -84,12 +84,14 @@ public class ProjectListFragment extends ListFragment {
                                 JSONObject location = object.getJSONObject("location");
                                 JSONArray imageList = object.getJSONArray("images");
 
-                                // take the first image for now. TODO build a slider...
-                                if(imageList.length() > 0) {
-                                    JSONObject image = imageList.getJSONObject(0);
+                                for(int j=0; j<imageList.length(); j++){
+                                    JSONObject image = imageList.getJSONObject(j);
                                     String url = image.getString("uri").replace("localhost", "10.0.2.2");
-                                    project.setImageUrl(url);
+                                    ProjectImage projectImage = new ProjectImage();
+                                    projectImage.url = url;
+                                    project.addImage(projectImage);
                                 }
+
                                 double longitude = location.getDouble("longitude");
                                 double latitude = location.getDouble("latitude");
 
