@@ -17,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.RuntimeExecutionException;
@@ -119,9 +120,11 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
         map.animateCamera(cameraUpdate);
 
-        map.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title(project.getName()));
+        MarkerOptions options = new MarkerOptions();
 
+        options.position(latLng);
+        options.title(project.getName());
+        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
+        map.addMarker( options );
     }
 }

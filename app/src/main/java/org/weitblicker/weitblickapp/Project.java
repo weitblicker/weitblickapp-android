@@ -8,6 +8,7 @@ import java.net.URL;
 
 public class Project {
     private int id;
+
     private String name;
     private String description;
     private String abst;
@@ -17,12 +18,9 @@ public class Project {
 
     public Project(){
         // test data
-        lat = 52.2679996f;
-        lng = 8.0508541f;
-        name = "Dies ist ein Beispiel Titel";
-        abst = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.";
-        description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-        imageUrl = "https://weitblicker.org/sites/default/files/styles/width100_custom_user_normal_1x/public/tappictures/12122961_1092695100749688_9146679379404367906_n.jpg";
+        lat = 0;
+        lng = 0;
+        imageUrl = "https://weitblicker.org/sites/default/files/styles/width100_custom_user_normal_1x/public/tappictures/gelande.jpg?itok=aEHsegE0";
     }
 
     public Project(int id, String name, String description, String abst, String location, float lat, float lng, String imageUrl){
@@ -32,6 +30,29 @@ public class Project {
         this.abst = abst;
         this.location = location;
         this.imageUrl = imageUrl;
+    }
+
+    public void setImageUrl(String url){ this.imageUrl = url; }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAbstract(String abst) {
+        this.abst = abst;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLocation(float lng, float lat){
+        this.lng = lng;
+        this.lat = lat;
     }
 
     // get properties

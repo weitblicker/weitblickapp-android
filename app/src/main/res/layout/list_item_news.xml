@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wb_darkgrey"
+    android:paddingBottom="20dp">
+
+    <ImageView
+        android:id="@+id/list_item_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        tools:src="@drawable/logo"
+        android:contentDescription="Bild"/>
+
+
+    <org.weitblicker.weitblickapp.BreeSerifTextView
+        android:id="@+id/list_item_news_host"
+        android:background="@drawable/news_city_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/list_item_news_image"
+        android:textColor="@color/wb_orange"
+        android:textSize="6pt"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:text="host"/>
+
+    <org.weitblicker.weitblickapp.OpenSansTextView
+        android:id="@+id/list_item_news_datetime"
+        android:background="@drawable/news_date_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/list_item_news_image"
+        android:layout_alignBottom="@id/list_item_news_image"
+        android:textColor="@color/wb_lightgrey"
+        android:textSize="6pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        tools:text="datetime"/>
+    
+    <ImageView
+        android:id="@+id/arrow_up_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/arrow_up"
+        android:layout_alignBottom="@id/list_item_news_image"
+        android:layout_centerHorizontal="true"/>
+
+    <org.weitblicker.weitblickapp.BreeSerifTextView
+        android:id="@+id/list_item_news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/list_item_news_image"
+        android:textColor="@color/wb_orange"
+        android:textSize="8pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:text="title"/>
+
+    <org.weitblicker.weitblickapp.OpenSansTextView
+        android:id="@+id/list_item_news_abstract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_item_news_title"
+        android:textColor="@color/wb_lightgrey"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:text="abstract"/>
+
+</RelativeLayout>

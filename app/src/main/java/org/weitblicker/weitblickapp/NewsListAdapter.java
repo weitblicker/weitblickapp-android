@@ -9,17 +9,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.squareup.picasso.Picasso;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class ProjectListAdapter extends BaseAdapter {
+public class NewsListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<Project> mDataSource;
+    private ArrayList<NewsArticle> mDataSource;
 
-    public ProjectListAdapter(Context context, ArrayList<Project> items){
+    public NewsListAdapter(Context context, ArrayList<NewsArticle> items){
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -37,35 +37,44 @@ public class ProjectListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position; // later return project id
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get view for row item
-        View rowView = mInflater.inflate(R.layout.list_item_project, parent, false);
+        View rowView = mInflater.inflate(R.layout.list_item_news, parent, false);
 
-        // caption
+        // title
         TextView captionTextView =
-                (TextView) rowView.findViewById(R.id.list_item_project_title); // plus possibly location -> 'Title, Location' as caption
+                (TextView) rowView.findViewById(R.id.list_item_news_title);
 
         // abstract
         TextView abstractTextView =
-                (TextView) rowView.findViewById(R.id.list_item_project_abstract);
+                (TextView) rowView.findViewById(R.id.list_item_news_abstract);
+
+        // host
+        TextView hostTextView =
+                (TextView) rowView.findViewById(R.id.list_item_news_host);
+
+        // datetime
+        TextView datetimeTextView =
+                (TextView) rowView.findViewById(R.id.list_item_news_datetime);
 
         // image
         ImageView imageView =
-                (ImageView) rowView.findViewById(R.id.list_item_project_image);
+                (ImageView) rowView.findViewById(R.id.list_item_news_image);
 
-        Project project = (Project) getItem(position);
+        NewsArticle article = (NewsArticle) getItem(position);
 
-        captionTextView.setText(project.getName());
-        abstractTextView.setText(project.getAbstract());
+        captionTextView.setText(article.getName());
+        abstractTextView.setText(article.getAbstract());
+        hostTextView.setText(article.getHost());
+        datetimeTextView.setText(article.getDate());
 
-        Log.i("test", project.getImageUrl());
         Picasso.with(mContext)
-            .load(project.getImageUrl())
-            .resize(800, 300)
+            .load(article.getImageUrl())
+            .fit()
             .centerCrop()
             .into(imageView);
 

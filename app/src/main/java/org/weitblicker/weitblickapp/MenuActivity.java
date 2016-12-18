@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectListener, NewsListFragment.OnNewsArticleSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,10 @@ public class MenuActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
 
-        if (id == R.id.nav_projects) {
+        if (id == R.id.nav_news){
+            title = "News";
+            fragment = new NewsListFragment();
+        }else if (id == R.id.nav_projects) {
             title = "Projekte";
             fragment = new ProjectListFragment();
 
@@ -153,4 +156,12 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onNewArticleSelect(NewsArticle newsArticle) {
+
+        Fragment fragment = NewsArticleFragment.newInstance(newsArticle);
+
+        loadFragment("News", fragment);
+
+    }
 }
