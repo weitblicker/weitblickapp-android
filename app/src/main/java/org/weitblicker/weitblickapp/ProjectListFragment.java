@@ -1,7 +1,7 @@
 package org.weitblicker.weitblickapp;
 
 import android.content.Context;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

@@ -2,7 +2,7 @@ package org.weitblicker.weitblickapp;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +43,7 @@ public class ImageSlidePageFragment extends Fragment {
         // Set the title view to show the page number.
         ImageView imageView = (ImageView) rootView.findViewById(R.id.image_pager_item_image);
 
-        Picasso.with(getContext())
+        Picasso.with(getActivity())
                 .load(image.url)
                 .fit()
                 .centerCrop()

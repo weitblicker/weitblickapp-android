@@ -3,7 +3,7 @@ package org.weitblicker.weitblickapp;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.app.ListFragment;
+import android.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
