@@ -67,12 +67,20 @@ public class ProjectListFragment extends ListFragment {
 
         RequestQueue queue = Volley.newRequestQueue(this.context);
         queue.start();
+
+        // TODO replace with the server address
         String url = "http://10.0.2.2:8180/rest/project/list/en";
+
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
+
+                        // TODO check whether an update is necessary or not
+                        // update list of projects -> clear all existing
+                        projects.clear();
+
                         for(int i=0; i<response.length(); i++){
                             Project project = new Project   ();
                             try {
@@ -99,8 +107,7 @@ public class ProjectListFragment extends ListFragment {
                                 project.setDescription(desc);
                                 project.setName(name);
                                 project.setLocation((float) longitude, (float) latitude);
-                                Log.i("debug","Added Project: " + name);
-                                System.out.println("Added Project: " + name);
+
                                 projects.add(project);
                                 adapter.notifyDataSetChanged();
 

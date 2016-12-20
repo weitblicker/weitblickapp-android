@@ -62,50 +62,64 @@ public class NewsListFragment extends ListFragment {
 
     private void loadNews(){
 
+        //TODO maybe use only one request queue with projects an the other stuff?
         RequestQueue queue = Volley.newRequestQueue(this.context);
         queue.start();
+
+        //TODO put this to options
         final String url = "https://weitblicker.org/news-rest-api";
+
+
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        // check whether an update is necessary or not, maybe merge
+                        // update news -> clear existing list of news
+                        news.clear();
+
                         try {
                             System.out.println(response.toString());
                             JSONArray articllist = response.getJSONArray("news-list");
-                            for (int i = 0; i < articllist.length(); i++) {
-                                JSONObject container = articllist.getJSONObject(i);
-                                JSONObject article = container.getJSONObject("news-article");
-                                String title = article.getString("article-title");
-                                String idStr = article.getString("id");
-                                int id = Integer.valueOf(idStr);
-                                String abst = article.getString("conclusion");
-                                JSONObject image = article.getJSONObject("teaserimage");
-                                String imageUrl = image.getString("src");
-                                String text = article.getString("article-text").trim();
-                                text = text.trim();
-                                text = text.replaceAll("\n{2,}", "\n\n");
-                                String host = article.getString("wb-host");
-                                String datetime = article.getString("datetime");
+                            try {
+                                for (int i = 0; i < articllist.length(); i++) {
+                                    JSONObject container = articllist.getJSONObject(i);
+                                    JSONObject article = container.getJSONObject("news-article");
+                                    String title = article.getString("article-title");
+                                    String idStr = article.getString("id");
+                                    int id = Integer.valueOf(idStr);
+                                    String abst = article.getString("conclusion");
+                                    JSONObject image = article.getJSONObject("teaserimage");
+                                    String imageUrl = image.getString("src");
+                                    String text = article.getString("article-text").trim();
 
-                                NewsArticle newsArticle = new NewsArticle();
-                                newsArticle.setName(title);
-                                newsArticle.setAbstract(abst);
-                                newsArticle.setImageUrl(imageUrl);
-                                newsArticle.setId(id);
-                                newsArticle.setText(text);
-                                newsArticle.setHost(host);
-                                newsArticle.setDateTime(datetime);
+                                    // remove redundant line breaks
+                                    text = text.trim();
+                                    text = text.replaceAll("\n{2,}", "\n");
+                                    String host = article.getString("wb-host");
+                                    String datetime = article.getString("datetime");
 
-                                Log.i("debug", "Added News Article: " + title);
-                                System.out.println("Added News Article: " + title);
-                                news.add(newsArticle);
-                                adapter.notifyDataSetChanged();
+                                    NewsArticle newsArticle = new NewsArticle();
+                                    newsArticle.setName(title);
+                                    newsArticle.setAbstract(abst);
+                                    newsArticle.setImageUrl(imageUrl);
+                                    newsArticle.setId(id);
+                                    newsArticle.setText(text);
+                                    newsArticle.setHost(host);
+                                    newsArticle.setDateTime(datetime);
 
+                                    news.add(newsArticle);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } catch (JSONException e){
+                                // TODO log this error
+                                e.printStackTrace();
                             }
                         } catch (JSONException e) {
-                                e.printStackTrace();
-
+                            // TODO log this error
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -116,8 +130,6 @@ public class NewsListFragment extends ListFragment {
                         error.printStackTrace();
                     }
                 });
-
         queue.add(jsObjRequest);
-
     }
 }

@@ -65,8 +65,8 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
             String projectJson = bundle.getString(PROJECT_BUNDLE_KEY);
             if(projectJson != null){
                 this.project = gson.fromJson(projectJson, Project.class);
-                Log.i("debug", projectJson);
             }else{
+                // TODO log this error
                 throw new RuntimeException("Bundle Arguments for "+ PROJECT_BUNDLE_KEY + " are null!");
             }
         }
@@ -96,14 +96,19 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         // TODO integrate user interaction in auto slide
         final Handler handler = new Handler();
         Runnable task = new Runnable(){
-            int i = 0;
             public void run(){
-                if(i >= imageViewPagerAdapter.getCount()) {
-                    i = 0;
-                }
 
-                imageViewPager.setCurrentItem(i, true);
-                i++;
+                // TODO disable when it is touched
+                synchronized (imageViewPager) {
+                    int currentItem = imageViewPager.getCurrentItem();
+                    int count = imageViewPagerAdapter.getCount();
+                    if (currentItem == count - 1) {
+                        imageViewPager.setCurrentItem(0, true);
+                    } else {
+                        imageViewPager.setCurrentItem(currentItem + 1, true);
+                    }
+                }
+                // TODO put mili seconds to options
                 handler.postDelayed(this, 4000);
             }
         };

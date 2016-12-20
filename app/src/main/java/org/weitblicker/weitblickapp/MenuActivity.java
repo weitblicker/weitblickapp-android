@@ -44,6 +44,27 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu menu = navigationView.getMenu();
+        FontAwesomeDrawable.FontAwesomeDrawableBuilder builder
+                = new FontAwesomeDrawable.FontAwesomeDrawableBuilder(getBaseContext());
+        builder.setColor(R.color.wb_darkgrey);
+        builder.setSize(22);
+
+        // news icon
+        MenuItem newsItem = menu.findItem(R.id.nav_news);
+        newsItem.setIcon(builder.build(R.string.fa_newspaper_o));
+
+        // projects icon
+        MenuItem projectsItem = menu.findItem(R.id.nav_projects);
+        projectsItem.setIcon(builder.build(R.string.fa_globe));
+
+        // bicycle icon
+        MenuItem bicycleItem = menu.findItem(R.id.nav_bicycle);
+        bicycleItem.setIcon(builder.build(R.string.fa_bicycle));
+
+        // bicycle icon
+        MenuItem campaignItem = menu.findItem(R.id.nav_campaign);
+        campaignItem.setIcon(builder.build(R.string.fa_rocket));
     }
 
     @Override
