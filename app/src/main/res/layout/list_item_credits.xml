@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/wb_darkgrey"
+    android:paddingBottom="20dp">
+
+    <ImageView
+        android:id="@+id/list_item_credits_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        tools:src="@drawable/logo"
+        android:contentDescription="Bild"/>
+
+    <ImageView
+        android:id="@+id/list_item_credits_frame"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignLeft="@id/list_item_credits_image"
+        android:layout_alignStart="@id/list_item_credits_image"
+        tools:src="@drawable/rounded_frame"
+        android:contentDescription="Bild"/>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/list_item_credits_image"
+        android:layout_toEndOf="@id/list_item_credits_image">
+
+        <org.weitblicker.weitblickapp.BreeSerifTextView
+            android:id="@+id/list_item_credits_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/wb_orange"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="8pt"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="title"/>
+
+        <org.weitblicker.weitblickapp.OpenSansTextView
+            android:id="@+id/list_item_credits_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/list_item_credits_name"
+            android:textColor="@color/wb_lightgrey"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="abstract"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

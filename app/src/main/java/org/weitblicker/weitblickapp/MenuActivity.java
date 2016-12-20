@@ -66,6 +66,10 @@ public class MenuActivity extends AppCompatActivity
         // bicycle icon
         MenuItem campaignItem = menu.findItem(R.id.nav_campaign);
         campaignItem.setIcon(builder.build(R.string.fa_rocket));
+
+        // bicycle icon
+        MenuItem creditsItem = menu.findItem(R.id.nav_credits);
+        creditsItem.setIcon(builder.build(R.string.fa_code));
     }
 
     @Override
@@ -125,12 +129,9 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_campaign) {
             title  = "Aktionen";
 
-        } else if (id == R.id.nav_share) {
-            title  = "Share";
-
-        } else if (id == R.id.nav_send) {
-            title  = "Send";
-
+        } else if (id == R.id.nav_credits) {
+            title  = "Credits";
+            fragment = new CreditsListFragment();
         }
 
         loadFragment(title, fragment);
