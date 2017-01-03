@@ -70,6 +70,7 @@ public class ProjectListFragment extends ListFragment {
 
         //String url = "https://weitblick-server.de/rest/project/list/en";
         String url = "http://localhost:8180/rest/project/list/en";
+        url = url.replace("localhost", "10.0.2.2");
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
