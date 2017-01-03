@@ -68,8 +68,8 @@ public class ProjectListFragment extends ListFragment {
         RequestQueue queue = Volley.newRequestQueue(this.context);
         queue.start();
 
-        // TODO replace with the server address
-        String url = "http://10.0.2.2:8180/rest/project/list/en";
+        //String url = "https://weitblick-server.de/rest/project/list/en";
+        String url = "http://localhost:8180/rest/project/list/en";
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

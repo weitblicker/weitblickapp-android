@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectListener, NewsListFragment.OnNewsArticleSelectListener {
 
@@ -127,7 +128,13 @@ public class MenuActivity extends AppCompatActivity
             title = "Radeln";
             fragment = new MapsFragment();
         } else if (id == R.id.nav_campaign) {
-            title  = "Aktionen";
+            title = "Aktionen";
+
+        } else if (id == R.id.nav_join) {
+            title = "Join Weitblick";
+            fragment = new JoinFragment();
+        } else if (id == R.id.nav_meet) {
+            title = "Meet Weitblick";
 
         } else if (id == R.id.nav_credits) {
             title  = "Credits";
@@ -170,21 +177,14 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public void onProjectSelect(Project project) {
-        // TODO load project fragment
-
         Fragment fragment = ProjectFragment.newInstance(project);
-
         loadFragment(project.getName(), fragment);
-
     }
 
 
     @Override
     public void onNewArticleSelect(NewsArticle newsArticle) {
-
         Fragment fragment = NewsArticleFragment.newInstance(newsArticle);
-
         loadFragment("News", fragment);
-
     }
 }

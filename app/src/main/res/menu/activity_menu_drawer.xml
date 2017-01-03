@@ -19,6 +19,12 @@
     <item android:title="Weitblick App">
         <menu>
             <item
+                android:id="@+id/nav_join"
+                android:title="Join" />
+            <item
+                android:id="@+id/nav_meet"
+                android:title="Meet" />
+            <item
                 android:id="@+id/nav_credits"
                 android:title="Credits" />
         </menu>
