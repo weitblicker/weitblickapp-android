@@ -28,11 +28,26 @@ public class CreditsListFragment extends ListFragment {
     HashMap<String, Credits> creditsMap = new HashMap<>();
     Context context;
     CreditsListAdapter adapter;
+    RequestQueue queue;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        queue = Volley.newRequestQueue(context);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        queue.start();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        queue.stop();
     }
 
     public void onActivityCreated(Bundle saveInstanceState){
@@ -47,9 +62,6 @@ public class CreditsListFragment extends ListFragment {
     }
 
     private void loadCredits(){
-
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.start();
 
         // TODO replace with the server address
         String gitHubApiWeitblickAppAndroidUrl = "https://api.github.com/repos/weitblicker/weitblickapp-android/stats/contributors";
@@ -109,6 +121,9 @@ public class CreditsListFragment extends ListFragment {
                             }
 
                         }
+
+                        adapter.notifyDataSetChanged();
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -181,8 +196,6 @@ public class CreditsListFragment extends ListFragment {
 
                         adapter.notifyDataSetChanged();
 
-
-
                     }
                 }, new Response.ErrorListener() {
 
@@ -199,10 +212,6 @@ public class CreditsListFragment extends ListFragment {
     }
 
     void loadUserInfo(final Credits creditsItem){
-
-        // maybe use only one queue
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.start();
 
         // TODO replace with the server address
         String gitHubApiUsersUrl = "https://api.github.com/users/" + creditsItem.login;

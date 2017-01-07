@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Project {
+public class MeetInfo {
     private int id;
 
     private String name;
@@ -13,11 +13,13 @@ public class Project {
     private String abst;
     private float lat, lng;
     private List<ImageInfo> images;
-    private List<String> hosts;
 
-    public Project(){
+    private String hostName;
+
+    private String hostEmail;
+
+    public MeetInfo(){
         images = new LinkedList<ImageInfo>();
-        hosts = new LinkedList<String>();
     }
 
     public void setName(String name) {
@@ -66,6 +68,10 @@ public class Project {
         return new LatLng(lat, lng);
     }
 
+    public boolean hasImage(){
+        return !images.isEmpty() && !images.get(0).equals("");
+    }
+
     public String getImageUrl(){
         if(!images.isEmpty()){
             return images.get(0).url;
@@ -73,26 +79,24 @@ public class Project {
         return "";
     }
 
-    public void addHost(String host){
-        if(!hosts.contains(host))
-            hosts.add(host);
-    }
-
     public List<ImageInfo> getImages(){
         return images;
     }
 
-    public String getHostNames()
-    {
-        StringBuilder strBuilder = new StringBuilder();
-        for(int i=0; i< hosts.size(); i++) {
-            String hostName = hosts.get(i);
-            hostName = hostName.replace("Weitblick", "");
-            strBuilder.append(hostName);
-            if(i != hosts.size()-1){
-                strBuilder.append(", ");
-            }
-        }
-        return strBuilder.toString();
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
+
+    public String getHostEmail() {
+        return hostEmail;
+    }
+
+    public void setHostEmail(String hostEmail) {
+        this.hostEmail = hostEmail;
     }
 }

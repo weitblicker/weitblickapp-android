@@ -1,0 +1,76 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp">
+
+    <RelativeLayout
+        android:id="@+id/fragment_header_wrapper"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/wb_darkgrey"
+        android:paddingBottom="20dp">
+
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/meetinfo_image_slide_pager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <ImageView
+            android:id="@+id/arrow_up_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/arrow_up"
+            android:layout_alignBottom="@id/meetinfo_image_slide_pager"
+            android:layout_centerHorizontal="true"/>
+
+        <org.weitblicker.weitblickapp.BreeSerifTextView
+            android:id="@+id/fragment_meetinfo_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/meetinfo_image_slide_pager"
+            android:textColor="@color/wb_orange"
+            android:textSize="8pt"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="title"/>
+
+        <org.weitblicker.weitblickapp.OpenSansTextView
+            android:id="@+id/fragment_meetinfo_abstract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_meetinfo_title"
+            android:textColor="@color/wb_lightgrey"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            tools:text="abstract"/>
+
+    </RelativeLayout>
+
+    <org.weitblicker.weitblickapp.OpenSansTextView
+        android:id="@+id/fragment_meetinfo_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_header_wrapper"
+        android:textColor="@color/wb_darkgrey"
+        android:padding="10dp"
+        tools:text="abstract"/>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/fragment_meetinfo_map"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/fragment_meetinfo_description"/>
+
+
+</RelativeLayout>
+</ScrollView>

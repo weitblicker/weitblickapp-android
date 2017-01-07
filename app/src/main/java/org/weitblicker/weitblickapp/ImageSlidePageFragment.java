@@ -14,9 +14,9 @@ public class ImageSlidePageFragment extends Fragment {
 
     public static final String ARG_IMAGE = "IMAGE_PAGE";
 
-    private ProjectImage image = null;
+    private ImageInfo image = null;
 
-    public static ImageSlidePageFragment create(ProjectImage image) {
+    public static ImageSlidePageFragment create(ImageInfo image) {
         ImageSlidePageFragment fragment = new ImageSlidePageFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_IMAGE, image);
@@ -29,7 +29,7 @@ public class ImageSlidePageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        image = (ProjectImage) getArguments().getSerializable(ARG_IMAGE);
+        image = (ImageInfo) getArguments().getSerializable(ARG_IMAGE);
     }
 
     @Override

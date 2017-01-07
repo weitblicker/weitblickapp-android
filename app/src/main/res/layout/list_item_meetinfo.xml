@@ -8,18 +8,19 @@
     android:paddingBottom="20dp">
 
     <ImageView
-        android:id="@+id/list_item_project_image"
+        android:id="@+id/list_item_meetinfo_image"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         tools:src="@drawable/logo"
         android:contentDescription="Bild"/>
 
+
     <org.weitblicker.weitblickapp.BreeSerifTextView
-        android:id="@+id/list_item_project_host"
+        android:id="@+id/list_item_meetinfo_host"
         android:background="@drawable/news_city_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/list_item_project_image"
+        android:layout_alignLeft="@id/list_item_meetinfo_image"
         android:textColor="@color/wb_orange"
         android:textSize="6pt"
         android:layout_marginTop="10dp"
@@ -34,15 +35,15 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/arrow_up"
-        android:layout_alignBottom="@id/list_item_project_image"
+        android:layout_alignBottom="@id/list_item_meetinfo_image"
         android:layout_centerHorizontal="true"/>
 
     <org.weitblicker.weitblickapp.BreeSerifTextView
-        android:id="@+id/list_item_project_title"
+        android:id="@+id/list_item_meetinfo_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/list_item_project_image"
+        android:layout_below="@id/list_item_meetinfo_image"
         android:textColor="@color/wb_orange"
         android:textSize="8pt"
         android:paddingLeft="10dp"
@@ -50,10 +51,10 @@
         tools:text="title"/>
 
     <org.weitblicker.weitblickapp.OpenSansTextView
-        android:id="@+id/list_item_project_abstract"
+        android:id="@+id/list_item_meetinfo_abstract"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/list_item_project_title"
+        android:layout_below="@+id/list_item_meetinfo_title"
         android:textColor="@color/wb_lightgrey"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

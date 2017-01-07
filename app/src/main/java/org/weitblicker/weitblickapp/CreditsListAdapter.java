@@ -54,8 +54,8 @@ public class CreditsListAdapter extends BaseAdapter {
                 (TextView) rowView.findViewById(R.id.list_item_credits_name);
 
         // image
-        //ImageView imageView =
-        //        (ImageView) rowView.findViewById(R.id.list_item_credits_image);
+        ImageView imageView =
+                (ImageView) rowView.findViewById(R.id.list_item_credits_image);
 
         Credits credits = (Credits) getItem(position);
 
@@ -98,12 +98,11 @@ public class CreditsListAdapter extends BaseAdapter {
 
         infoTextView.setText(info);
 
-        /*Picasso.with(mContext)
+        Picasso.with(mContext)
             .load(credits.imageUrl)
             .fit()
             .centerCrop()
             .into(imageView);
-        */
 
         return rowView;
     }

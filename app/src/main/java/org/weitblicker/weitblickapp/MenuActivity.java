@@ -19,7 +19,12 @@ import android.view.View;
 
 
 public class MenuActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ProjectListFragment.OnProjectSelectListener, NewsListFragment.OnNewsArticleSelectListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ProjectListFragment.OnProjectSelectListener,
+        NewsListFragment.OnNewsArticleSelectListener,
+        MeetInfoListFragment.OnMeetInfoSelectListener {
+
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +66,33 @@ public class MenuActivity extends AppCompatActivity
         projectsItem.setIcon(builder.build(R.string.fa_globe));
 
         // bicycle icon
-        MenuItem bicycleItem = menu.findItem(R.id.nav_bicycle);
-        bicycleItem.setIcon(builder.build(R.string.fa_bicycle));
+        //MenuItem bicycleItem = menu.findItem(R.id.nav_bicycle);
+        //bicycleItem.setIcon(builder.build(R.string.fa_bicycle));
 
-        // bicycle icon
-        MenuItem campaignItem = menu.findItem(R.id.nav_campaign);
-        campaignItem.setIcon(builder.build(R.string.fa_rocket));
+        // campaign icon
+        //MenuItem campaignItem = menu.findItem(R.id.nav_campaign);
+        //campaignItem.setIcon(builder.build(R.string.fa_rocket));
 
-        // bicycle icon
+        // credits icon
         MenuItem creditsItem = menu.findItem(R.id.nav_credits);
         creditsItem.setIcon(builder.build(R.string.fa_code));
+
+        // meet icon
+        MenuItem meetItem = menu.findItem(R.id.nav_meet);
+        meetItem.setIcon(builder.build(R.string.fa_users));
+
+        // join icon
+        //MenuItem joinItem = menu.findItem(R.id.nav_join);
+        //joinItem.setIcon(builder.build(R.string.fa_star));
+
+        String title = "Weitblick News";
+        Fragment fragment = new NewsListFragment();
+        loadFragment(title, fragment);
+        newsItem.setEnabled(true);
+        newsItem.setChecked(true);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -116,28 +137,27 @@ public class MenuActivity extends AppCompatActivity
         Fragment fragment = new Fragment();
         String title = getString(R.string.app_name);
 
-
         if (id == R.id.nav_news){
-            title = "News";
+            title = "Weitblick News";
             fragment = new NewsListFragment();
         }else if (id == R.id.nav_projects) {
-            title = "Projekte";
+            title = "Weitblick Projekte";
             fragment = new ProjectListFragment();
 
-        } else if (id == R.id.nav_bicycle) {
+        } /*else if (id == R.id.nav_bicycle) {
             title = "Radeln";
             fragment = new MapsFragment();
         } else if (id == R.id.nav_campaign) {
-            title = "Aktionen";
+            title = "Weitblick Aktionen";
 
         } else if (id == R.id.nav_join) {
             title = "Join Weitblick";
             fragment = new JoinFragment();
-        } else if (id == R.id.nav_meet) {
+        } */else if (id == R.id.nav_meet) {
             title = "Meet Weitblick";
-
+            fragment = new MeetInfoListFragment();
         } else if (id == R.id.nav_credits) {
-            title  = "Credits";
+            title  = "App Credits";
             fragment = new CreditsListFragment();
         }
 
@@ -148,43 +168,52 @@ public class MenuActivity extends AppCompatActivity
     int cnt = 0;
 
     public void loadFragment(String title, Fragment fragment){
-        if (fragment != null) {
+        if (fragment != null && !fragment.isAdded()) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.add(R.id.content_menu, fragment);
+
+            if(currentFragment != null && currentFragment.isAdded()){
+                ft.remove(currentFragment);
+            }
 
             Log.i("debug", "loadFragment: " + title + " cnt: " + cnt + " fragment:" + fragment.toString());
             ft.replace(R.id.content_menu, fragment);
             ft.addToBackStack(cnt++ + "cnt");
             ft.commit();
 
-            if(!title.equals(currentTitle)){
+            if(title != null && !title.equals("") && !title.equals(currentTitle)){
                 currentTitle = title;
-               // ft.commit();
 
+                // set the toolbar title
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(title);
+                }
             }
-
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
+
+            currentFragment = fragment;
         }
 
-        // set the toolbar title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
+
     }
 
 
     @Override
     public void onProjectSelect(Project project) {
         Fragment fragment = ProjectFragment.newInstance(project);
-        loadFragment(project.getName(), fragment);
+        loadFragment(null, fragment);
     }
-
 
     @Override
     public void onNewArticleSelect(NewsArticle newsArticle) {
         Fragment fragment = NewsArticleFragment.newInstance(newsArticle);
-        loadFragment("News", fragment);
+        loadFragment(null, fragment);
+    }
+
+    @Override
+    public void onMeetInfoSelect(MeetInfo meetInfo) {
+        Fragment fragment = MeetInfoFragment.newInstance(meetInfo);
+        loadFragment(null, fragment);
     }
 }

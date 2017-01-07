@@ -53,6 +53,10 @@ public class ProjectListAdapter extends BaseAdapter {
         TextView abstractTextView =
                 (TextView) rowView.findViewById(R.id.list_item_project_abstract);
 
+        // host
+        TextView hostTextView =
+                (TextView) rowView.findViewById(R.id.list_item_project_host);
+
         // image
         ImageView imageView =
                 (ImageView) rowView.findViewById(R.id.list_item_project_image);
@@ -61,6 +65,7 @@ public class ProjectListAdapter extends BaseAdapter {
 
         captionTextView.setText(project.getName());
         abstractTextView.setText(project.getAbstract());
+        hostTextView.setText(project.getHostNames());
 
         Log.i("test", project.getImageUrl());
         Picasso.with(mContext)

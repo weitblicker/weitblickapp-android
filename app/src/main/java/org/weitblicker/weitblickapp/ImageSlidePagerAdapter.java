@@ -9,10 +9,10 @@ import java.util.List;
 
 class ImageSlidePagerAdapter extends FragmentStatePagerAdapter {
 
-    List<ProjectImage> images = null;
+    List<ImageInfo> images = null;
     Context context = null;
 
-    public ImageSlidePagerAdapter(Context context, FragmentManager fm, List<ProjectImage> images) {
+    public ImageSlidePagerAdapter(Context context, FragmentManager fm, List<ImageInfo> images) {
         super(fm);
         this.images = images;
         this.context = context;

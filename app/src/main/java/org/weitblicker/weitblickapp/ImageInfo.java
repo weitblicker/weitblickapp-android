@@ -2,7 +2,7 @@ package org.weitblicker.weitblickapp;
 
 import java.io.Serializable;
 
-public class ProjectImage implements Serializable {
+public class ImageInfo implements Serializable {
     String url;
     String desc;
     String name;
