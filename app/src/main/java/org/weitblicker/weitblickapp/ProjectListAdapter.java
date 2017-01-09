@@ -68,11 +68,13 @@ public class ProjectListAdapter extends BaseAdapter {
         hostTextView.setText(project.getHostNames());
 
         Log.i("test", project.getImageUrl());
-        Picasso.with(mContext)
-            .load(project.getImageUrl())
-            .resize(800, 300)
-            .centerCrop()
-            .into(imageView);
+        if(project.hasImage()) {
+            Picasso.with(mContext)
+                    .load(project.getImageUrl())
+                    .resize(800, 300)
+                    .centerCrop()
+                    .into(imageView);
+        }
 
         return rowView;
     }

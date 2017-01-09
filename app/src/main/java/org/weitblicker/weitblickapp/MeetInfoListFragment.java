@@ -18,13 +18,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class MeetInfoListFragment extends ListFragment {
     ArrayList<MeetInfo> meetInfos = new ArrayList<MeetInfo>();
     Context context;
     OnMeetInfoSelectListener onMeetInfoSelectInterface;
     MeetInfoListAdapter adapter;
+
+    static DateFormat dateformat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     public void onAttach(Context context) {
@@ -98,6 +110,7 @@ public class MeetInfoListFragment extends ListFragment {
                                 JSONArray imageList = object.getJSONArray("images");
                                 JSONObject host = object.getJSONObject("host");
                                 String hostName = host.getString("name");
+                                hostName = hostName.replace("Weitblick", "").trim();
                                 String hostEmail = host.getString("email");
                                 for(int j=0; j<imageList.length(); j++){
                                     JSONObject image = imageList.getJSONObject(j);
@@ -109,6 +122,8 @@ public class MeetInfoListFragment extends ListFragment {
 
                                 double longitude = location.getDouble("longitude");
                                 double latitude = location.getDouble("latitude");
+                                String datetimeString = object.getString("datetime");
+                                Date datetime = dateformat.parse(datetimeString);
 
                                 meetInfo.setAbstract(abst);
                                 meetInfo.setDescription(desc);
@@ -116,14 +131,25 @@ public class MeetInfoListFragment extends ListFragment {
                                 meetInfo.setLocation((float) longitude, (float) latitude);
                                 meetInfo.setHostName(hostName);
                                 meetInfo.setHostEmail(hostEmail);
+                                meetInfo.setDateTime(datetime);
 
-                                meetInfos.add(meetInfo);
+                                Date now = new Date();
+                                calendar.setTime(new Date());
+                                calendar.add(Calendar.HOUR_OF_DAY, 2);
+                                Date expire = calendar.getTime();
+                                if(datetime.after(expire)){
+                                    meetInfos.add(meetInfo);
+                                }
                                 adapter.notifyDataSetChanged();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
                             }
                         }
+
+                        Collections.sort(meetInfos);
                     }
                 }, new Response.ErrorListener() {
 

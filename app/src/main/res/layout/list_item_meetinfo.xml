@@ -38,6 +38,20 @@
         android:layout_alignBottom="@id/list_item_meetinfo_image"
         android:layout_centerHorizontal="true"/>
 
+    <org.weitblicker.weitblickapp.OpenSansTextView
+        android:id="@+id/list_item_meetinfo_datetime"
+        android:background="@drawable/meetinfo_date_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/list_item_meetinfo_image"
+        android:layout_alignTop="@id/list_item_meetinfo_image"
+        android:textColor="@color/wb_lightgrey"
+        android:textSize="8pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        tools:text="datetime"/>
+
     <org.weitblicker.weitblickapp.BreeSerifTextView
         android:id="@+id/list_item_meetinfo_title"
         android:layout_width="match_parent"

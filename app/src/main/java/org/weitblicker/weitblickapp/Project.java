@@ -95,4 +95,8 @@ public class Project {
         }
         return strBuilder.toString();
     }
+
+    public boolean hasImage() {
+        return !images.isEmpty();
+    }
 }

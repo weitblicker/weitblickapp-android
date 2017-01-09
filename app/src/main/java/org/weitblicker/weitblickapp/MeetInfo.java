@@ -2,10 +2,11 @@ package org.weitblicker.weitblickapp;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MeetInfo {
+public class MeetInfo implements Comparable<MeetInfo>{
     private int id;
 
     private String name;
@@ -13,9 +14,8 @@ public class MeetInfo {
     private String abst;
     private float lat, lng;
     private List<ImageInfo> images;
-
+    private Date dateTime;
     private String hostName;
-
     private String hostEmail;
 
     public MeetInfo(){
@@ -83,7 +83,6 @@ public class MeetInfo {
         return images;
     }
 
-
     public String getHostName() {
         return hostName;
     }
@@ -98,5 +97,18 @@ public class MeetInfo {
 
     public void setHostEmail(String hostEmail) {
         this.hostEmail = hostEmail;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    @Override
+    public int compareTo(MeetInfo other) {
+        return dateTime.compareTo(other.dateTime) ;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
     }
 }
