@@ -144,17 +144,18 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setMyLocationButtonEnabled(false);
         //map.setMyLocationEnabled(false);
 
-        LatLng latLng = project.getLatLng();
+        LatLng latLng = project.getLocation().getLatLng();
+        int mapZoom = project.getLocation().mapZoom;
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, mapZoom);
         map.animateCamera(cameraUpdate);
 
         MarkerOptions options = new MarkerOptions();
 
         options.position(latLng);
         options.title(project.getName());
-        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
+        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.wb_location));
         map.addMarker( options );
     }
 }

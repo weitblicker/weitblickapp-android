@@ -68,7 +68,7 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/fragment_meetinfo_map"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_below="@id/fragment_meetinfo_description"/>
 
 

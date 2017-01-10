@@ -97,8 +97,10 @@ public class ProjectListFragment extends ListFragment {
                                     project.addImage(imageInfo);
                                 }
 
-                                double longitude = location.getDouble("longitude");
-                                double latitude = location.getDouble("latitude");
+                                Location locationObject = new Location();
+                                locationObject.lat = location.getDouble("latitude");
+                                locationObject.lng = location.getDouble("longitude");
+                                locationObject.mapZoom = location.getInt("mapZoom");
 
                                 JSONArray hosts = object.getJSONArray("hosts");
                                 for(int j=0; j<hosts.length(); j++){
@@ -111,7 +113,7 @@ public class ProjectListFragment extends ListFragment {
                                 project.setAbstract(abst);
                                 project.setDescription(desc);
                                 project.setName(name);
-                                project.setLocation((float) longitude, (float) latitude);
+                                project.setLocation(locationObject);
 
                                 projects.add(project);
                                 adapter.notifyDataSetChanged();

@@ -12,7 +12,7 @@ public class MeetInfo implements Comparable<MeetInfo>{
     private String name;
     private String description;
     private String abst;
-    private float lat, lng;
+    private Location location;
     private List<ImageInfo> images;
     private Date dateTime;
     private String hostName;
@@ -38,11 +38,6 @@ public class MeetInfo implements Comparable<MeetInfo>{
         this.id = id;
     }
 
-    public void setLocation(float lng, float lat){
-        this.lng = lng;
-        this.lat = lat;
-    }
-
     public void addImage(ImageInfo image){
         images.add(image);
     }
@@ -62,10 +57,6 @@ public class MeetInfo implements Comparable<MeetInfo>{
 
     public String getAbstract() {
         return abst;
-    }
-
-    public LatLng getLatLng() {
-        return new LatLng(lat, lng);
     }
 
     public boolean hasImage(){
@@ -110,5 +101,13 @@ public class MeetInfo implements Comparable<MeetInfo>{
 
     public Date getDateTime() {
         return dateTime;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

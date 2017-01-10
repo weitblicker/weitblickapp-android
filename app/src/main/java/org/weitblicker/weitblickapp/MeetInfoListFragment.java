@@ -120,15 +120,18 @@ public class MeetInfoListFragment extends ListFragment {
                                     meetInfo.addImage(imageInfo);
                                 }
 
-                                double longitude = location.getDouble("longitude");
-                                double latitude = location.getDouble("latitude");
+                                Location locationObject = new Location();
+                                locationObject.lng = location.getDouble("longitude");
+                                locationObject.lat = location.getDouble("latitude");
+                                locationObject.mapZoom = location.getInt("mapZoom");
+
                                 String datetimeString = object.getString("datetime");
                                 Date datetime = dateformat.parse(datetimeString);
 
                                 meetInfo.setAbstract(abst);
                                 meetInfo.setDescription(desc);
                                 meetInfo.setName(name);
-                                meetInfo.setLocation((float) longitude, (float) latitude);
+                                meetInfo.setLocation(locationObject);
                                 meetInfo.setHostName(hostName);
                                 meetInfo.setHostEmail(hostEmail);
                                 meetInfo.setDateTime(datetime);

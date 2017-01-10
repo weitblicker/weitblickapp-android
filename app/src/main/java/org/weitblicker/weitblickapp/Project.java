@@ -11,7 +11,7 @@ public class Project {
     private String name;
     private String description;
     private String abst;
-    private float lat, lng;
+    private Location location;
     private List<ImageInfo> images;
     private List<String> hosts;
 
@@ -36,9 +36,12 @@ public class Project {
         this.id = id;
     }
 
-    public void setLocation(float lng, float lat){
-        this.lng = lng;
-        this.lat = lat;
+    public void setLocation(Location location){
+        this.location = location;
+    }
+
+    public Location getLocation(){
+        return location;
     }
 
     public void addImage(ImageInfo image){
@@ -60,10 +63,6 @@ public class Project {
 
     public String getAbstract() {
         return abst;
-    }
-
-    public LatLng getLatLng() {
-        return new LatLng(lat, lng);
     }
 
     public String getImageUrl(){

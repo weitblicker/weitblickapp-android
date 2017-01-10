@@ -132,17 +132,18 @@ public class MeetInfoFragment extends Fragment implements OnMapReadyCallback {
         map.getUiSettings().setMyLocationButtonEnabled(false);
         //map.setMyLocationEnabled(false);
 
-        LatLng latLng = meetInfo.getLatLng();
+        LatLng latLng = meetInfo.getLocation().getLatLng();
+        int mapZoom = meetInfo.getLocation().mapZoom;
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, mapZoom);
         map.animateCamera(cameraUpdate);
 
         MarkerOptions options = new MarkerOptions();
 
         options.position(latLng);
         options.title(meetInfo.getName());
-        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon));
+        options.icon(BitmapDescriptorFactory.fromResource(R.drawable.wb_location));
         map.addMarker( options );
     }
 }
