@@ -8,6 +8,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 
 public class FontAwesomeDrawable extends Drawable {
@@ -115,7 +116,7 @@ public class FontAwesomeDrawable extends Drawable {
         }
 
         public void setColor(int color) {
-            this.color = context.getResources().getColor(color);
+            this.color = ContextCompat.getColor(context, color);
         }
 
         public void setAntiAliased(boolean antiAliased) {
@@ -135,6 +136,12 @@ public class FontAwesomeDrawable extends Drawable {
 
         public FontAwesomeDrawable build(int icon) {
             return new FontAwesomeDrawable(icon, sizeDpi, color, antiAliased, fakeBold,
+                    shadowRadius, shadowDx, shadowDy, shadowColor, context);
+        }
+
+        public FontAwesomeDrawable build(int icon, int color) {
+            int colorRGB = ContextCompat.getColor(context, color);
+            return new FontAwesomeDrawable(icon, sizeDpi, colorRGB, antiAliased, fakeBold,
                     shadowRadius, shadowDx, shadowDy, shadowColor, context);
         }
     }

@@ -25,7 +25,6 @@ import com.squareup.picasso.Picasso;
 public class NewsArticleFragment extends Fragment {
 
     private NewsArticle article = null;
-    private Context context = null;
     static Gson gson = new Gson();
 
     final static String NEWS_ARTICLE_BUNDLE_KEY = "JSON_PROJECT";
@@ -76,7 +75,7 @@ public class NewsArticleFragment extends Fragment {
 
         ImageView imageView = (ImageView) view.findViewById(R.id.fragment_news_image);
 
-        Picasso.with(context)
+        Picasso.with(getActivity())
             .load(article.getImageUrl())
             .fit()
             .centerCrop()
@@ -88,12 +87,10 @@ public class NewsArticleFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        context = null;
     }
 }

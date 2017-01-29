@@ -31,7 +31,6 @@ import java.util.Locale;
 
 public class MeetInfoListFragment extends ListFragment {
     ArrayList<MeetInfo> meetInfos = new ArrayList<MeetInfo>();
-    Context context;
     OnMeetInfoSelectListener onMeetInfoSelectInterface;
     MeetInfoListAdapter adapter;
 
@@ -41,7 +40,6 @@ public class MeetInfoListFragment extends ListFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
         if (context instanceof OnMeetInfoSelectListener) {
             onMeetInfoSelectInterface = (OnMeetInfoSelectListener) context;
         } else {
@@ -82,9 +80,6 @@ public class MeetInfoListFragment extends ListFragment {
     }
 
     private void loadMeetInfos(){
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-        queue.start();
 
         String url = "https://weitblick-server.de/rest/meeting/list/en";
 
@@ -162,8 +157,6 @@ public class MeetInfoListFragment extends ListFragment {
                         error.printStackTrace();
                     }
                 });
-
-        queue.add(jsObjRequest);
-
+        NetworkHandling.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
     }
 }

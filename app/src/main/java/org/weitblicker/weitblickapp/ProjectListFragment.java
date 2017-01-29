@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -22,14 +23,12 @@ import java.util.ArrayList;
 
 public class ProjectListFragment extends ListFragment {
     ArrayList<Project> projects = new ArrayList<Project>();
-    Context context;
     OnProjectSelectListener onProjectSelectInterface;
     ProjectListAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
         if (context instanceof OnProjectSelectListener) {
             onProjectSelectInterface = (OnProjectSelectListener) context;
         } else {
@@ -41,9 +40,16 @@ public class ProjectListFragment extends ListFragment {
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);
         adapter = new ProjectListAdapter(getActivity(), projects);
-        loadProjects();
-
         setListAdapter(adapter);
+
+        LoadProjects.loadProjects(projects,
+                NetworkHandling.getInstance(getActivity()).getRequestQueue(),
+                new LoadProjects.OnProjectsLoaded() {
+            @Override
+            public void projectsLoaded() {
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         // disables the divider
         getListView().setDividerHeight(0);
@@ -59,80 +65,4 @@ public class ProjectListFragment extends ListFragment {
 
     }
 
-    private void loadProjects(){
-
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.start();
-
-        String url = "https://weitblick-server.de/rest/project/list/en";
-        //String url = "http://localhost:8180/rest/project/list/en";
-        //url = url.replace("localhost", "10.0.2.2");
-
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                        // TODO check whether an update is necessary or not
-                        // update list of projects -> clear all existing
-                        projects.clear();
-
-                        for(int i=0; i<response.length(); i++){
-                            Project project = new Project   ();
-                            try {
-                                JSONObject object = response.getJSONObject(i);
-
-                                String name = object.getString("name");
-                                String desc = object.getString("desc");
-                                String abst = object.getString("abst");
-                                JSONObject location = object.getJSONObject("location");
-                                JSONArray imageList = object.getJSONArray("images");
-
-                                for(int j=0; j<imageList.length(); j++){
-                                    JSONObject image = imageList.getJSONObject(j);
-                                    String url = image.getString("uri");
-                                    ImageInfo imageInfo = new ImageInfo();
-                                    imageInfo.url = url;
-                                    project.addImage(imageInfo);
-                                }
-
-                                Location locationObject = new Location();
-                                locationObject.lat = location.getDouble("latitude");
-                                locationObject.lng = location.getDouble("longitude");
-                                locationObject.mapZoom = location.getInt("mapZoom");
-
-                                JSONArray hosts = object.getJSONArray("hosts");
-                                for(int j=0; j<hosts.length(); j++){
-                                    JSONObject host = hosts.getJSONObject(j);
-                                    String hostName = host.getString("name");
-                                    String hostEmail = host.getString("email");
-                                    project.addHost(hostName);
-                                }
-
-                                project.setAbstract(abst);
-                                project.setDescription(desc);
-                                project.setName(name);
-                                project.setLocation(locationObject);
-
-                                projects.add(project);
-                                adapter.notifyDataSetChanged();
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        error.printStackTrace();
-                    }
-                });
-
-        queue.add(jsObjRequest);
-
-    }
 }

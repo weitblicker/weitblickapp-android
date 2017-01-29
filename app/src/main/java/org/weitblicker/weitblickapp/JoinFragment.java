@@ -24,8 +24,6 @@ import com.google.gson.Gson;
 
 public class JoinFragment extends Fragment{
 
-    private Context context = null;
-
     public JoinFragment() {
         super();
     }
@@ -54,13 +52,11 @@ public class JoinFragment extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        context = null;
     }
 
 }

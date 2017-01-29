@@ -1,10 +1,8 @@
 package org.weitblicker.weitblickapp;
 
-import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -15,24 +13,39 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ProjectListFragment.OnProjectSelectListener,
         NewsListFragment.OnNewsArticleSelectListener,
-        MeetInfoListFragment.OnMeetInfoSelectListener {
+        MeetInfoListFragment.OnMeetInfoSelectListener,
+        ProjectMapFragment.OnFragmentInteractionListener{
 
-    Fragment currentFragment;
+    private Fragment currentFragment;
+    private Menu optionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // setup picasso image loading for caching
+        setupPicasso();
+
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +54,7 @@ public class MenuActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -66,11 +80,11 @@ public class MenuActivity extends AppCompatActivity
         projectsItem.setIcon(builder.build(R.string.fa_globe));
 
         // bicycle icon
-        //MenuItem bicycleItem = menu.findItem(R.id.nav_bicycle);
+        //MenuItem bicycleItem = project_options.findItem(R.id.nav_bicycle);
         //bicycleItem.setIcon(builder.build(R.string.fa_bicycle));
 
         // campaign icon
-        //MenuItem campaignItem = menu.findItem(R.id.nav_campaign);
+        //MenuItem campaignItem = project_options.findItem(R.id.nav_campaign);
         //campaignItem.setIcon(builder.build(R.string.fa_rocket));
 
         // credits icon
@@ -82,7 +96,7 @@ public class MenuActivity extends AppCompatActivity
         meetItem.setIcon(builder.build(R.string.fa_users));
 
         // join icon
-        //MenuItem joinItem = menu.findItem(R.id.nav_join);
+        //MenuItem joinItem = project_options.findItem(R.id.nav_join);
         //joinItem.setIcon(builder.build(R.string.fa_star));
 
         String title = "Weitblick News";
@@ -93,6 +107,20 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+    private void setupPicasso(){
+        File httpCacheDirectory = new File(getCacheDir(), "picasso-cache");
+        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().cache(cache);
+        Picasso.Builder picassoBuilder = new Picasso.Builder(getApplicationContext());
+        picassoBuilder.downloader(new OkHttp3Downloader(clientBuilder.build()));
+        Picasso picasso = picassoBuilder.build();
+        try {
+            Picasso.setSingletonInstance(picasso);
+        } catch (IllegalStateException ignored) {
+            Log.e("Picasso", "Picasso instance already used");
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -106,24 +134,65 @@ public class MenuActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        optionMenu = menu;
+        getMenuInflater().inflate(R.menu.project_options, menu);
         return true;
     }
 
+    private void loadOptionsMenuForSelection(MenuItem item){
+
+        hideAllOptionItems();
+
+        switch(item.getItemId()){
+            case R.id.nav_projects:
+                setOptionItemVisible(R.id.op_nav_list_view);
+                setOptionItemVisible(R.id.op_nav_map_view);
+                return;
+            default:
+                return;
+        }
+    }
+
+    private void setOptionItemVisible(int itemId){
+        optionMenu.findItem(itemId).setVisible(true);
+    }
+
+    private void hideAllOptionItems(){
+        for(int i=0; i< optionMenu.size(); i++){
+            MenuItem item = optionMenu.getItem(i);
+            item.setVisible(false);
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+
+        switch(item.getItemId()){
+            case R.id.op_nav_map_view:
+                ProjectMapFragment projectMapFragment = ProjectMapFragment.newInstance();
+                projectMapFragment.setOnProjectSelectListener(this);
+                loadFragment(null, projectMapFragment);
+                break;
+            case R.id.op_nav_list_view:
+                ProjectListFragment projectListFragment = new ProjectListFragment();
+                loadFragment(null, projectListFragment);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getCheckedItemId(Menu menu) {
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.isChecked()) {
+                return item.getItemId();
+            }
+        }
+        return -1;
     }
 
     String currentTitle = null;
@@ -137,31 +206,45 @@ public class MenuActivity extends AppCompatActivity
         Fragment fragment = new Fragment();
         String title = getString(R.string.app_name);
 
-        if (id == R.id.nav_news){
-            title = "Weitblick News";
-            fragment = new NewsListFragment();
-        }else if (id == R.id.nav_projects) {
-            title = "Weitblick Projekte";
-            fragment = new ProjectListFragment();
+        switch(id){
+            case R.id.nav_news:
+                title = "Weitblick News";
+                fragment = new NewsListFragment();
+                break;
+            case R.id.nav_projects:
+                title = "Weitblick Projekte";
+                fragment = new ProjectListFragment();
+                break;
 
-        } /*else if (id == R.id.nav_bicycle) {
-            title = "Radeln";
-            fragment = new MapsFragment();
-        } else if (id == R.id.nav_campaign) {
-            title = "Weitblick Aktionen";
+            /* case R.id.nav_campaign:
+                title = "Aktivität";
+                // TODO
+                break;
+            case R.id.nav_bicycle:
+                title = "Radeln";
+                // TODO
+                break;
+            case R.id.nav_join:
+                // TODO
+                title = "Join Weitblick";
+                fragment = new JoinFragment();
+                break;
 
-        } else if (id == R.id.nav_join) {
-            title = "Join Weitblick";
-            fragment = new JoinFragment();
-        } */else if (id == R.id.nav_meet) {
-            title = "Meet Weitblick";
-            fragment = new MeetInfoListFragment();
-        } else if (id == R.id.nav_credits) {
-            title  = "App Credits";
-            fragment = new CreditsListFragment();
+            */
+            case R.id.nav_meet:
+                title = "Meet Weitblick";
+                fragment = new MeetInfoListFragment();
+                break;
+            case R.id.nav_credits:
+                title  = "App Credits";
+                fragment = new CreditsListFragment();
+                break;
         }
 
         loadFragment(title, fragment);
+
+        loadOptionsMenuForSelection(item);
+
         return true;
     }
 
@@ -215,5 +298,10 @@ public class MenuActivity extends AppCompatActivity
     public void onMeetInfoSelect(MeetInfo meetInfo) {
         Fragment fragment = MeetInfoFragment.newInstance(meetInfo);
         loadFragment(null, fragment);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

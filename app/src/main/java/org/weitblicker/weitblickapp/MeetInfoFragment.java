@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 public class MeetInfoFragment extends Fragment implements OnMapReadyCallback {
 
     private MeetInfo meetInfo = null;
-    private Context context = null;
     private ViewPager imageViewPager = null;
     static Gson gson = new Gson();
     GoogleMap map = null;
@@ -77,7 +76,7 @@ public class MeetInfoFragment extends Fragment implements OnMapReadyCallback {
 
         // Instantiate a ViewPager and a PagerAdapter.
         imageViewPager = (ViewPager) view.findViewById(R.id.meetinfo_image_slide_pager);
-        final ImageSlidePagerAdapter imageViewPagerAdapter = new ImageSlidePagerAdapter(context, getFragmentManager(), meetInfo.getImages());
+        final ImageSlidePagerAdapter imageViewPagerAdapter = new ImageSlidePagerAdapter(getActivity(), getFragmentManager(), meetInfo.getImages());
         imageViewPager.setAdapter(imageViewPagerAdapter);
 
 
@@ -117,13 +116,11 @@ public class MeetInfoFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        context = null;
     }
 
     @Override

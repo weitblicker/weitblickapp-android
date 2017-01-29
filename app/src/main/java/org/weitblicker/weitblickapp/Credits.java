@@ -16,6 +16,7 @@ public class Credits implements Comparable<Credits> {
     String bio;
     int linesOfCodeWeitblickAppAndroid;
     int linesOfCodeWeitblickAppServer;
+    boolean loaded = false;
 
 
     @Override

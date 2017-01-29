@@ -24,22 +24,23 @@ import java.util.ArrayList;
 
 public class NewsListFragment extends ListFragment {
     ArrayList<NewsArticle> news = new ArrayList<NewsArticle>();
-    Context context;
     OnNewsArticleSelectListener onNewsArticleSelectInterface;
     NewsListAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
         if (context instanceof OnNewsArticleSelectListener) {
             onNewsArticleSelectInterface = (OnNewsArticleSelectListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnNewsArticleSelectListener");
         }
+
+
     }
 
+    @Override
     public void onActivityCreated(Bundle saveInstanceState){
         super.onActivityCreated(saveInstanceState);
         adapter = new NewsListAdapter(getActivity(), news);
@@ -61,10 +62,6 @@ public class NewsListFragment extends ListFragment {
     }
 
     private void loadNews(){
-
-        //TODO maybe use only one request queue with projects an the other stuff?
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        queue.start();
 
         //TODO put this to options
         final String url = "https://weitblicker.org/news-rest-api";
@@ -90,7 +87,7 @@ public class NewsListFragment extends ListFragment {
                                     String title = article.getString("article-title");
                                     String idStr = article.getString("id");
                                     int id = Integer.valueOf(idStr);
-                                    String abst = article.getString("conclusion");
+                                    String abst = article.getString("conclusion").trim();
                                     JSONObject image = article.getJSONObject("teaserimage");
                                     String imageUrl = image.getString("src");
                                     String text = article.getString("article-text").trim();
@@ -130,6 +127,6 @@ public class NewsListFragment extends ListFragment {
                         error.printStackTrace();
                     }
                 });
-        queue.add(jsObjRequest);
+        NetworkHandling.getInstance(getActivity()).addToRequestQueue(jsObjRequest);
     }
 }

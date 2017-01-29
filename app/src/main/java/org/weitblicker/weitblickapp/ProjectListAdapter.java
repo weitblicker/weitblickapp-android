@@ -40,6 +40,7 @@ public class ProjectListAdapter extends BaseAdapter {
         return position; // later return project id
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get view for row item
@@ -71,7 +72,7 @@ public class ProjectListAdapter extends BaseAdapter {
         if(project.hasImage()) {
             Picasso.with(mContext)
                     .load(project.getImageUrl())
-                    .resize(800, 300)
+                    .fit()
                     .centerCrop()
                     .into(imageView);
         }

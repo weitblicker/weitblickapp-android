@@ -87,6 +87,8 @@ public class Project {
         for(int i=0; i< hosts.size(); i++) {
             String hostName = hosts.get(i);
             hostName = hostName.replace("Weitblick", "");
+            hostName.trim();
+
             strBuilder.append(hostName);
             if(i != hosts.size()-1){
                 strBuilder.append(", ");

@@ -28,26 +28,24 @@ public class CreditsListFragment extends ListFragment {
     HashMap<String, Credits> creditsMap = new HashMap<>();
     Context context;
     CreditsListAdapter adapter;
-    RequestQueue queue;
+
+    int errorReload = 0;
 
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
-        queue = Volley.newRequestQueue(context);
+        errorReload = 0;
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        queue.start();
     }
 
     @Override
     public void onStop(){
         super.onStop();
-        queue.stop();
     }
 
     public void onActivityCreated(Bundle saveInstanceState){
@@ -61,11 +59,11 @@ public class CreditsListFragment extends ListFragment {
         getListView().setDividerHeight(0);
     }
 
-    private void loadCredits(){
+    private void loadCredits() {
+
 
         // TODO replace with the server address
         String gitHubApiWeitblickAppAndroidUrl = "https://api.github.com/repos/weitblicker/weitblickapp-android/stats/contributors";
-        String gitHubApiWeitblickAppServerUrl = "https://api.github.com/repos/weitblicker/weitblickapp-server/stats/contributors";
 
         credits.clear();
 
@@ -80,7 +78,7 @@ public class CreditsListFragment extends ListFragment {
                         // TODO check whether an update is necessary or not
                         // update list of credits -> clear all existing
 
-                        for(int i=0; i<response.length(); i++){
+                        for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject object = response.getJSONObject(i);
 
@@ -96,7 +94,7 @@ public class CreditsListFragment extends ListFragment {
                                 int additions = 0;
                                 int deletions = 0;
 
-                                for(int j=0; j<weeks.length(); j++){
+                                for (int j = 0; j < weeks.length(); j++) {
                                     JSONObject week = weeks.getJSONObject(j);
                                     additions += week.getInt("a");
                                     deletions += week.getInt("d");
@@ -105,7 +103,7 @@ public class CreditsListFragment extends ListFragment {
                                 int linesOfCode = additions - deletions;
 
                                 Credits creditsItem = null;
-                                if((creditsItem = creditsMap.get(login)) == null ){
+                                if ((creditsItem = creditsMap.get(login)) == null) {
                                     creditsItem = new Credits();
                                     creditsItem.login = login;
                                     creditsMap.put(login, creditsItem);
@@ -122,22 +120,31 @@ public class CreditsListFragment extends ListFragment {
 
                         }
 
-                        adapter.notifyDataSetChanged();
+                        loadCredits2();
 
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("error response...");
 
-                        // TODO Auto-generated method stub
-                        error.printStackTrace();
+                        if(errorReload < 5){
+                            System.out.println("error response... retry ..." + errorReload);
+
+                            errorReload++;
+                            loadCredits();
+                        }else {
+                            error.printStackTrace();
+                        }
                     }
                 });
+        NetworkHandling.getInstance(getActivity()).addToRequestQueue(jsObjRequestWeitblickAppAndroid);
 
-        queue.add(jsObjRequestWeitblickAppAndroid);
+    }
 
+    private void loadCredits2(){
+
+        String gitHubApiWeitblickAppServerUrl = "https://api.github.com/repos/weitblicker/weitblickapp-server/stats/contributors";
 
         JsonArrayRequest jsObjRequestWeitblickAppServer = new JsonArrayRequest
                 (Request.Method.GET, gitHubApiWeitblickAppServerUrl, null, new Response.Listener<JSONArray>() {
@@ -201,13 +208,18 @@ public class CreditsListFragment extends ListFragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        error.printStackTrace();
+                        if(errorReload < 4){
+                            System.out.println("error response... retry ..." + errorReload);
+
+                            errorReload++;
+                            loadCredits();
+                        }else {
+                            error.printStackTrace();
+                        }
                     }
                 });
 
-
-        queue.add(jsObjRequestWeitblickAppServer);
+        NetworkHandling.getInstance(getActivity()).addToRequestQueue(jsObjRequestWeitblickAppServer);
 
     }
 
@@ -241,8 +253,8 @@ public class CreditsListFragment extends ListFragment {
                                 user.bio = bio;
                             }
 
+                            user.loaded = true;
 
-                            System.out.println("Name: " + name + " Bio: " + bio + " Location: " + location);
                             Collections.sort(credits);
 
                             adapter.notifyDataSetChanged();
@@ -255,13 +267,17 @@ public class CreditsListFragment extends ListFragment {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("error response...");
+                        if(errorReload < 4){
+                            System.out.println("error response... retry ..." + errorReload);
 
-                        // TODO Auto-generated method stub
-                        error.printStackTrace();
+                            errorReload++;
+                            loadCredits();
+                        }else {
+                            error.printStackTrace();
+                        }
                     }
                 });
 
-        queue.add(jsObjRequestGitHubUser);
+        NetworkHandling.getInstance(getActivity()).addToRequestQueue(jsObjRequestGitHubUser);
     }
 }

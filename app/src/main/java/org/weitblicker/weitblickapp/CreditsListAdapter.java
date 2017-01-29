@@ -45,6 +45,9 @@ public class CreditsListAdapter extends BaseAdapter {
         // Get view for row item
         View rowView = mInflater.inflate(R.layout.list_item_credits, parent, false);
 
+        Credits credits = (Credits) getItem(position);
+        if(!credits.loaded) return rowView;
+
         // info
         TextView infoTextView =
                 (TextView) rowView.findViewById(R.id.list_item_credits_info);
@@ -56,8 +59,6 @@ public class CreditsListAdapter extends BaseAdapter {
         // image
         ImageView imageView =
                 (ImageView) rowView.findViewById(R.id.list_item_credits_image);
-
-        Credits credits = (Credits) getItem(position);
 
         String name = credits.name != null? credits.name : credits.login;
 

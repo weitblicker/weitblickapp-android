@@ -35,8 +35,7 @@ import static android.R.attr.handle;
 
 public class ProjectFragment extends Fragment implements OnMapReadyCallback {
 
-    private Project project = null;
-    private Context context = null;
+    private Project project;
     private ViewPager imageViewPager = null;
     static Gson gson = new Gson();
     GoogleMap map = null;
@@ -89,7 +88,7 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
 
         // Instantiate a ViewPager and a PagerAdapter.
         imageViewPager = (ViewPager) view.findViewById(R.id.project_image_slide_pager);
-        final ImageSlidePagerAdapter imageViewPagerAdapter = new ImageSlidePagerAdapter(context, getFragmentManager(), project.getImages());
+        final ImageSlidePagerAdapter imageViewPagerAdapter = new ImageSlidePagerAdapter(getActivity(), getFragmentManager(), project.getImages());
         imageViewPager.setAdapter(imageViewPagerAdapter);
 
 
@@ -129,13 +128,11 @@ public class ProjectFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        context = null;
     }
 
     @Override

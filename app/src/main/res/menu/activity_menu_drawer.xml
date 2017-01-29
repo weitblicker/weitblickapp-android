@@ -10,8 +10,8 @@
             android:title="Projekte" />
         <!--item
             android:id="@+id/nav_bicycle"
-            android:title="Radeln" />
-        <item
+            android:title="Radeln" /-->
+        <!--item
             android:id="@+id/nav_campaign"
             android:title="Aktionen" /-->
 

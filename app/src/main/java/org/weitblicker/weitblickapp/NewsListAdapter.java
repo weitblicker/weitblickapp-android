@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class NewsListAdapter extends BaseAdapter {
         ImageView imageView =
                 (ImageView) rowView.findViewById(R.id.list_item_news_image);
 
-        NewsArticle article = (NewsArticle) getItem(position);
+        final NewsArticle article = (NewsArticle) getItem(position);
 
         captionTextView.setText(article.getName());
         abstractTextView.setText(article.getAbstract());
@@ -73,10 +75,11 @@ public class NewsListAdapter extends BaseAdapter {
         datetimeTextView.setText(article.getDate());
 
         Picasso.with(mContext)
-            .load(article.getImageUrl())
-            .fit()
-            .centerCrop()
-            .into(imageView);
+                .load(article.getImageUrl())
+                .fit()
+                .centerCrop()
+                .networkPolicy(NetworkPolicy.OFFLINE)
+                .into(imageView, new PicassoFallbackCallback(mContext, imageView, article.getImageUrl()));
 
         return rowView;
     }

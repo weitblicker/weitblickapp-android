@@ -67,7 +67,7 @@
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/fragment_project_map"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@id/fragment_project_description"/>
 
