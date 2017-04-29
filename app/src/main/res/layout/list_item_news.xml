@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/wb_darkgrey"
-    android:paddingBottom="20dp">
+    android:background="@color/wb_darkgrey">
 
     <ImageView
         android:id="@+id/list_item_news_image"
@@ -72,6 +71,12 @@
         android:textColor="@color/wb_lightgrey"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:paddingBottom="30dp"
         tools:text="abstract"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@drawable/divider"/>
 
 </RelativeLayout>
